@@ -8,6 +8,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import tr.edu.ozyegin.cs105.registration.business.RegistrationService;
 import tr.edu.ozyegin.cs105.registration.data.Course;
 import tr.edu.ozyegin.cs105.registration.data.Student;
+import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.TextField;
 
 public class StudentsViewController {
 
@@ -15,6 +17,7 @@ public class StudentsViewController {
     @FXML private TableColumn<Student, String> numberCol;
     @FXML private TableColumn<Student, String> firstNameCol;
     @FXML private TableColumn<Student, String> lastNameCol;
+    @FXML private TextField searchField;
 
     @FXML private Label detailHeader;
     @FXML private TableView<Course> coursesTable;
@@ -38,7 +41,26 @@ public class StudentsViewController {
 
     public void setService(RegistrationService service) {
         this.service = service;
-        studentsTable.setItems(service.allStudents());
+
+        FilteredList<Student> filteredStudents =
+                new FilteredList<>(service.allStudents(), student -> true);
+
+        searchField.textProperty().addListener((obs, oldText, newText) -> {
+            String query = newText == null ? "" : newText.trim().toLowerCase();
+
+            filteredStudents.setPredicate(student -> {
+                if (query.isEmpty()) {
+                    return true;
+                }
+
+                return student.getFirstName().toLowerCase().contains(query)
+                        || student.getLastName().toLowerCase().contains(query)
+                        || student.getStudentNumber().toLowerCase().contains(query);
+            });
+        });
+
+        studentsTable.setItems(filteredStudents);
+
         if (!studentsTable.getItems().isEmpty()) {
             studentsTable.getSelectionModel().selectFirst();
         }

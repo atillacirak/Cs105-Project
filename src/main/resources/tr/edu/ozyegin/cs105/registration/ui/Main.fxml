@@ -13,6 +13,7 @@
             <items>
                 <Button text="Students" onAction="#showStudents"/>
                 <Button text="Courses" onAction="#showCourses"/>
+                <Button text="Add Student" onAction="#showAddStudent"/>
             </items>
         </ToolBar>
     </top>

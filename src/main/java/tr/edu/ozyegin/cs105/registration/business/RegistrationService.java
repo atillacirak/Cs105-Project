@@ -73,4 +73,35 @@ public class RegistrationService {
     public boolean drop(String studentNumber, int courseId) {
         return db.enrollments().drop(studentNumber, courseId);
     }
+    public Student addStudent(String studentNumber,
+                              String firstName,
+                              String lastName) {
+
+        if (studentNumber == null || studentNumber.isBlank()) {
+            throw new IllegalArgumentException("Student number cannot be empty.");
+        }
+
+        if (firstName == null || firstName.isBlank()) {
+            throw new IllegalArgumentException("First name cannot be empty.");
+        }
+
+        if (lastName == null || lastName.isBlank()) {
+            throw new IllegalArgumentException("Last name cannot be empty.");
+        }
+
+        studentNumber = studentNumber.trim();
+        firstName = firstName.trim();
+        lastName = lastName.trim();
+
+        if (db.students().findById(studentNumber).isPresent()) {
+            throw new IllegalArgumentException("Student already exists.");
+        }
+
+        Student student = new Student(firstName, lastName, studentNumber);
+
+        db.students().save(student);
+        allStudents.add(student);
+
+        return student;
+    }
 }

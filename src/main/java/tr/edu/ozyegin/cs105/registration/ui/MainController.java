@@ -31,6 +31,11 @@ public class MainController {
         loadView("CoursesView.fxml",
                 (CoursesViewController c) -> c.setService(service));
     }
+    @FXML
+    public void showAddStudent() {
+        loadView("AddStudentView.fxml",
+                (AddStudentController c) -> c.setService(service));
+    }
 
     private <C> void loadView(String fxml, Consumer<C> wireController) {
         try {

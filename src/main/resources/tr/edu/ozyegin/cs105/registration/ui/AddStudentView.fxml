@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="tr.edu.ozyegin.cs105.registration.ui.AddStudentController"
+      spacing="10">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Student Number"/>
+    <TextField fx:id="studentNumberField"/>
+
+    <Label text="First Name"/>
+    <TextField fx:id="firstNameField"/>
+
+    <Label text="Last Name"/>
+    <TextField fx:id="lastNameField"/>
+
+    <Button text="Add Student" onAction="#addStudent"/>
+
+    <Label fx:id="messageLabel"/>
+
+</VBox>
