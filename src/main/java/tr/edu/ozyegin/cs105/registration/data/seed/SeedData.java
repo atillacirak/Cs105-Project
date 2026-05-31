@@ -25,16 +25,16 @@ public final class SeedData {
     );
 
     public static final List<Course> COURSES = List.of(
-            new Course(4001, "CS101",   "Computational Thinking"),
-            new Course(4002, "CS105",   "Introduction to Programming"),
-            new Course(4003, "CS201",   "Data Structures and Algorithms"),
-            new Course(4004, "CS302",   "Operating Systems"),
-            new Course(4005, "CS308",   "Software Engineering"),
-            new Course(4006, "MATH101", "Calculus I"),
-            new Course(4007, "MATH102", "Calculus II"),
-            new Course(4008, "MATH211", "Discrete Mathematics"),
-            new Course(4009, "NS101",   "Physics I"),
-            new Course(4010, "HUM101",  "Critical Reading and Writing")
+            new Course(4001, "CS101",   "Computational Thinking", 25),
+            new Course(4002, "CS105",   "Introduction to Programming", 25),
+            new Course(4003, "CS201",   "Data Structures and Algorithms", 25),
+            new Course(4004, "CS302",   "Operating Systems", 25),
+            new Course(4005, "CS308",   "Software Engineering", 25),
+            new Course(4006, "MATH101", "Calculus I", 40),
+            new Course(4007, "MATH102", "Calculus II", 40),
+            new Course(4008, "MATH211", "Discrete Mathematics", 40),
+            new Course(4009, "NS101",   "Physics I", 35),
+            new Course(4010, "HUM101",  "Critical Reading and Writing", 30)
     );
 
     public static final List<Professor> PROFESSORS = List.of(
