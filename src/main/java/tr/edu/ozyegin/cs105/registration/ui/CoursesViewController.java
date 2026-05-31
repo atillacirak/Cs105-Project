@@ -21,6 +21,10 @@ public class CoursesViewController {
     @FXML private Label courseHeader;
     @FXML private Label instructorLabel;
     @FXML private Label capacityLabel;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
     @FXML private TableView<Student> rosterTable;
     @FXML private TableColumn<Student, String> rosterNumberCol;

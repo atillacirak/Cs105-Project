@@ -73,6 +73,10 @@ public class RegistrationService {
         if (currentEnrolledCount >= db.courses().findById(courseId).get().getCapacity()) {
             return false;
         }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         return db.enrollments().enroll(studentNumber, courseId);
     }
 

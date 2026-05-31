@@ -11,6 +11,10 @@ public class Course {
         this.courseCode = courseCode;
         this.title = title;
         this.capacity = capacity;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     }
 
     public int getCourseId() {
