@@ -2,23 +2,24 @@ package tr.edu.ozyegin.cs105.registration.data;
 
 public class Course {
     private final int courseId;
-    private int capacity;
+    private final int capacity;
     private final String courseCode;
     private final String title;
+
 
     public Course(int courseId, String courseCode, String title, int capacity) {
         this.courseId = courseId;
         this.courseCode = courseCode;
         this.title = title;
         this.capacity = capacity;
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     }
 
     public int getCourseId() {
         return courseId;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 
     public String getCourseCode() {
@@ -27,10 +28,6 @@ public class Course {
 
     public String getTitle() {
         return title;
-    }
-
-    public int getCapacity() {
-        return capacity;
     }
 
     @Override

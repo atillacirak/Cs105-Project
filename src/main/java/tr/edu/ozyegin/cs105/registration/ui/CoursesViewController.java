@@ -21,10 +21,7 @@ public class CoursesViewController {
     @FXML private Label courseHeader;
     @FXML private Label instructorLabel;
     @FXML private Label capacityLabel;
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 
     @FXML private TableView<Student> rosterTable;
     @FXML private TableColumn<Student, String> rosterNumberCol;
@@ -60,7 +57,6 @@ public class CoursesViewController {
         if (course == null) {
             courseHeader.setText("Select a course");
             instructorLabel.setText("Instructor: -");
-            capacityLabel.setText("Capacity: -");
             rosterTable.getItems().clear();
             enrollComboBox.getItems().clear();
             return;
@@ -88,7 +84,6 @@ public class CoursesViewController {
         rosterTable.setItems(service.rosterFor(course.getCourseId()));
         enrollComboBox.setItems(service.unenrolledIn(course.getCourseId()));
         enrollComboBox.getSelectionModel().clearSelection();
-
         int enrolled = rosterTable.getItems().size();
         capacityLabel.setText("Capacity: " + enrolled + " / " + course.getCapacity());
     }
