@@ -67,6 +67,11 @@ public class RegistrationService {
         if (db.courses().findById(courseId).isEmpty()) {
             return false;
         }
+        int currentEnrolledCount = db.enrollments().findStudentsIn(courseId).size();
+
+        if (currentEnrolledCount >= db.courses().findById(courseId).get().getCapacity()) {
+            return false;
+        }
         return db.enrollments().enroll(studentNumber, courseId);
     }
 

@@ -25,6 +25,7 @@
             <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
             <Label fx:id="courseHeader" text="Select a course" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
             <Label fx:id="instructorLabel" text="Instructor: -"/>
+            <Label fx:id="capacityLabel" text="Capacity: -"/>
             <Label text="Enrolled students:"/>
             <TableView fx:id="rosterTable" VBox.vgrow="ALWAYS">
                 <columns>
