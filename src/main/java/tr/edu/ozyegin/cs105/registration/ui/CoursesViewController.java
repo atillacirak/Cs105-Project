@@ -20,8 +20,6 @@ public class CoursesViewController {
 
     @FXML private Label courseHeader;
     @FXML private Label instructorLabel;
-    @FXML private Label capacityLabel;
-
 
     @FXML private TableView<Student> rosterTable;
     @FXML private TableColumn<Student, String> rosterNumberCol;
@@ -84,8 +82,6 @@ public class CoursesViewController {
         rosterTable.setItems(service.rosterFor(course.getCourseId()));
         enrollComboBox.setItems(service.unenrolledIn(course.getCourseId()));
         enrollComboBox.getSelectionModel().clearSelection();
-        int enrolled = rosterTable.getItems().size();
-        capacityLabel.setText("Capacity: " + enrolled + " / " + course.getCapacity());
     }
 
     @FXML
