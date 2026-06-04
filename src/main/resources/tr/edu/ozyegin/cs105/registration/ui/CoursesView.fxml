@@ -17,14 +17,16 @@
     <items>
         <TableView fx:id="coursesTable">
             <columns>
-                <TableColumn fx:id="codeCol"  text="Code"  prefWidth="100"/>
-                <TableColumn fx:id="titleCol" text="Title" prefWidth="220"/>
+                <TableColumn fx:id="codeCol"     text="Code"     prefWidth="90"/>
+                <TableColumn fx:id="titleCol"    text="Title"    prefWidth="180"/>
+                <TableColumn fx:id="scheduleCol" text="Schedule" prefWidth="160"/>
             </columns>
         </TableView>
         <VBox spacing="8">
             <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
             <Label fx:id="courseHeader" text="Select a course" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
             <Label fx:id="instructorLabel" text="Instructor: -"/>
+            <Label fx:id="scheduleLabel" text="Schedule: -"/>
             <Label fx:id="capacityLabel" text="Capacity: -"/>
             <Label text="Enrolled students:"/>
             <TableView fx:id="rosterTable" VBox.vgrow="ALWAYS">

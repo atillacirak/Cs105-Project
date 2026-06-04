@@ -1,5 +1,8 @@
 package tr.edu.ozyegin.cs105.registration.data;
 
+import java.time.LocalTime;
+import java.time.DayOfWeek;
+
 public class Course {
     private final int courseId;
     private final int capacity;
@@ -7,11 +10,22 @@ public class Course {
     private final String title;
 
 
-    public Course(int courseId, String courseCode, String title, int capacity) {
+    private final LocalTime startTime;
+
+
+
+    private final LocalTime endTime;
+    private final DayOfWeek dayOfWeek;
+
+
+    public Course(int courseId, String courseCode, String title, int capacity, DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime) {
         this.courseId = courseId;
         this.courseCode = courseCode;
         this.title = title;
         this.capacity = capacity;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.dayOfWeek = dayOfWeek;
     }
 
     public int getCourseId() {
@@ -28,6 +42,18 @@ public class Course {
 
     public String getTitle() {
         return title;
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
     @Override

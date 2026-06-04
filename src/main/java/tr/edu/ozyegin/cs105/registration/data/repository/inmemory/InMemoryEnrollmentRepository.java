@@ -1,5 +1,6 @@
 package tr.edu.ozyegin.cs105.registration.data.repository.inmemory;
 
+import tr.edu.ozyegin.cs105.registration.business.EnrollmentResult;
 import tr.edu.ozyegin.cs105.registration.data.Course;
 import tr.edu.ozyegin.cs105.registration.data.Student;
 import tr.edu.ozyegin.cs105.registration.data.repository.CourseRepository;
@@ -25,8 +26,8 @@ public class InMemoryEnrollmentRepository implements EnrollmentRepository {
     }
 
     @Override
-    public boolean enroll(String studentNumber, Integer courseId) {
-        return rows.add(new Enrollment(studentNumber, courseId));
+    public EnrollmentResult enroll(String studentNumber, Integer courseId) {
+        return new EnrollmentResult(rows.add(new Enrollment(studentNumber, courseId)), "Enrollment successful");
     }
 
     @Override

@@ -4,6 +4,8 @@ import tr.edu.ozyegin.cs105.registration.data.Course;
 import tr.edu.ozyegin.cs105.registration.data.Professor;
 import tr.edu.ozyegin.cs105.registration.data.Staff;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 
 public final class SeedData {
@@ -25,16 +27,16 @@ public final class SeedData {
     );
 
     public static final List<Course> COURSES = List.of(
-            new Course(4001, "CS101",   "Computational Thinking", 25),
-            new Course(4002, "CS105",   "Introduction to Programming", 25),
-            new Course(4003, "CS201",   "Data Structures and Algorithms", 25),
-            new Course(4004, "CS302",   "Operating Systems", 25),
-            new Course(4005, "CS308",   "Software Engineering", 25),
-            new Course(4006, "MATH101", "Calculus I", 40),
-            new Course(4007, "MATH102", "Calculus II", 40),
-            new Course(4008, "MATH211", "Discrete Mathematics", 40),
-            new Course(4009, "NS101",   "Physics I", 35),
-            new Course(4010, "HUM101",  "Critical Reading and Writing", 30)
+            new Course(4001, "CS101",   "Computational Thinking", 25, DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(11, 0)),
+            new Course(4002, "CS105",   "Introduction to Programming", 25, DayOfWeek.MONDAY, LocalTime.of(10, 30), LocalTime.of(12, 30)),
+            new Course(4010, "HUM101",  "Critical Reading and Writing", 30, DayOfWeek.TUESDAY, LocalTime.of(9, 0), LocalTime.of(11, 0)),
+            new Course(4003, "CS201",   "Data Structures and Algorithms", 25, DayOfWeek.TUESDAY, LocalTime.of(13, 0), LocalTime.of(15, 0)),
+            new Course(4004, "CS302",   "Operating Systems", 25, DayOfWeek.WEDNESDAY, LocalTime.of(9, 0), LocalTime.of(12, 0)),
+            new Course(4005, "CS308",   "Software Engineering", 25, DayOfWeek.WEDNESDAY, LocalTime.of(11, 0), LocalTime.of(13, 0)),
+            new Course(4006, "MATH101", "Calculus I", 40, DayOfWeek.THURSDAY, LocalTime.of(10, 0), LocalTime.of(12, 0)),
+            new Course(4007, "MATH102", "Calculus II", 40, DayOfWeek.THURSDAY, LocalTime.of(12, 0), LocalTime.of(14, 0)),
+            new Course(4008, "MATH211", "Discrete Mathematics", 40, DayOfWeek.FRIDAY, LocalTime.of(14, 0), LocalTime.of(16, 0)),
+            new Course(4009, "NS101",   "Physics I", 35, DayOfWeek.FRIDAY, LocalTime.of(15, 0), LocalTime.of(17, 0))
     );
 
     public static final List<Professor> PROFESSORS = List.of(

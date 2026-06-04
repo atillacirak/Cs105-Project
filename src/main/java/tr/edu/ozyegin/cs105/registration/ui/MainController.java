@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import tr.edu.ozyegin.cs105.registration.business.RegistrationService;
+import tr.edu.ozyegin.cs105.registration.data.Student;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -23,7 +24,10 @@ public class MainController {
     @FXML
     public void showStudents() {
         loadView("StudentsView.fxml",
-                (StudentsViewController c) -> c.setService(service));
+                (StudentsViewController c) -> {
+                    c.setService(service);
+                    c.setMainController(this);
+                });
     }
 
     @FXML
@@ -31,6 +35,22 @@ public class MainController {
         loadView("CoursesView.fxml",
                 (CoursesViewController c) -> c.setService(service));
     }
+    @FXML
+    public void showSchedule() {
+        showScheduleFor(null);
+    }
+
+    /** Opens the schedule page, pre-selecting {@code student} when non-null. */
+    public void showScheduleFor(Student student) {
+        loadView("ScheduleView.fxml",
+                (ScheduleViewController c) -> {
+                    c.setService(service);
+                    if (student != null) {
+                        c.selectStudent(student);
+                    }
+                });
+    }
+
     @FXML
     public void showAddStudent() {
         loadView("AddStudentView.fxml",

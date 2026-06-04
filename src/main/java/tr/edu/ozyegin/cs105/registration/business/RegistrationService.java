@@ -8,6 +8,7 @@ import tr.edu.ozyegin.cs105.registration.data.Student;
 import tr.edu.ozyegin.cs105.registration.data.seed.MockDatabase;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class RegistrationService {
@@ -60,19 +61,37 @@ public class RegistrationService {
         return result;
     }
 
-    public boolean enroll(String studentNumber, int courseId) {
+    public EnrollmentResult enroll(String studentNumber, int courseId) {
         if (db.students().findById(studentNumber).isEmpty()) {
-            return false;
+            return new EnrollmentResult(false,"Student can't found");
         }
         if (db.courses().findById(courseId).isEmpty()) {
-            return false;
+            return new EnrollmentResult(false,"Course can't found");
         }
         int currentEnrolledCount = db.enrollments().findStudentsIn(courseId).size();
 
         if (currentEnrolledCount >= db.courses().findById(courseId).get().getCapacity()) {
-            return false;
+            return new EnrollmentResult(false,"Course is full");
         }
+        if (checkTimeConflict(studentNumber, courseId) != 0) {
+            return new EnrollmentResult(false,("Time conflict with course " + db.courses().findById(courseId).get().getCourseCode()));
+        }
+
         return db.enrollments().enroll(studentNumber, courseId);
+    }
+
+    public int checkTimeConflict(String studentNumber, int courseId) {
+        List<Course> courses = db.enrollments().findCoursesOf(studentNumber);
+        for (Course c : courses) {
+            if (c.getDayOfWeek() == db.courses().findById(courseId).get().getDayOfWeek()) {
+                if (c.getStartTime().isBefore(db.courses().findById(courseId).get().getEndTime()) &&
+                        c.getEndTime().isAfter(db.courses().findById(courseId).get().getStartTime())) {
+                    return c.getCourseId();
+                }
+            }
+        }
+        return 0;
+
     }
 
     public boolean drop(String studentNumber, int courseId) {

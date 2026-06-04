@@ -1,14 +1,6 @@
 package tr.edu.ozyegin.cs105.registration.data.persistance;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import tr.edu.ozyegin.cs105.registration.data.Course;
 import tr.edu.ozyegin.cs105.registration.data.Employee;
 import tr.edu.ozyegin.cs105.registration.data.Professor;
@@ -25,6 +17,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +43,9 @@ public final class DatabaseStateStore {
                 // Employee type and lose the Professor/Staff distinction. The adapter
                 // below writes/reads a "type" discriminator so the subclass survives.
                 .registerTypeAdapter(Employee.class, new EmployeeAdapter())
+                .registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
                 .create();
+
     }
 
     /** True if a saved state file already exists on disk. */
@@ -158,6 +153,18 @@ public final class DatabaseStateStore {
                 case "Staff" -> context.deserialize(json, Staff.class);
                 default -> throw new JsonParseException("Unknown employee type: " + type.getAsString());
             };
+        }
+    }
+
+    private static final class LocalTimeAdapter implements JsonSerializer<LocalTime>, JsonDeserializer<LocalTime> {
+        @Override
+        public JsonElement serialize(LocalTime src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(src.toString());
+        }
+
+        @Override
+        public LocalTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+            return LocalTime.parse(json.getAsString());
         }
     }
 }

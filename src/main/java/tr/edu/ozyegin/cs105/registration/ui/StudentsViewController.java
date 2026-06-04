@@ -1,6 +1,7 @@
 package tr.edu.ozyegin.cs105.registration.ui;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,11 +21,13 @@ public class StudentsViewController {
     @FXML private TextField searchField;
 
     @FXML private Label detailHeader;
+    @FXML private Button viewScheduleButton;
     @FXML private TableView<Course> coursesTable;
     @FXML private TableColumn<Course, String> courseCodeCol;
     @FXML private TableColumn<Course, String> courseTitleCol;
 
     private RegistrationService service;
+    private MainController mainController;
 
     @FXML
     public void initialize() {
@@ -37,6 +40,22 @@ public class StudentsViewController {
 
         studentsTable.getSelectionModel().selectedItemProperty()
                 .addListener((obs, oldS, newS) -> showDetail(newS));
+
+        // No student selected means there's nothing to show a schedule for.
+        viewScheduleButton.disableProperty().bind(
+                studentsTable.getSelectionModel().selectedItemProperty().isNull());
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    @FXML
+    public void onViewSchedule() {
+        Student selected = studentsTable.getSelectionModel().getSelectedItem();
+        if (selected != null && mainController != null) {
+            mainController.showScheduleFor(selected);
+        }
     }
 
     public void setService(RegistrationService service) {

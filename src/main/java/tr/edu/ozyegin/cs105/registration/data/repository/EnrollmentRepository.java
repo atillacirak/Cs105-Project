@@ -1,5 +1,6 @@
 package tr.edu.ozyegin.cs105.registration.data.repository;
 
+import tr.edu.ozyegin.cs105.registration.business.EnrollmentResult;
 import tr.edu.ozyegin.cs105.registration.data.Course;
 import tr.edu.ozyegin.cs105.registration.data.Student;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface EnrollmentRepository {
 
-    boolean enroll(String studentNumber, Integer courseId);
+    EnrollmentResult enroll(String studentNumber, Integer courseId);
 
     boolean drop(String studentNumber, Integer courseId);
 

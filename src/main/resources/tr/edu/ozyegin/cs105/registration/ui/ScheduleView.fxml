@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="tr.edu.ozyegin.cs105.registration.ui.ScheduleViewController"
+      spacing="10">
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Student:"/>
+        <ComboBox fx:id="studentComboBox" promptText="Pick a student" prefWidth="320"/>
+    </HBox>
+
+    <Label fx:id="headerLabel" text="Select a student" style="-fx-font-size: 14; -fx-font-weight: bold;"/>
+
+    <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS">
+        <content>
+            <GridPane fx:id="scheduleGrid" gridLinesVisible="false"/>
+        </content>
+    </ScrollPane>
+</VBox>
