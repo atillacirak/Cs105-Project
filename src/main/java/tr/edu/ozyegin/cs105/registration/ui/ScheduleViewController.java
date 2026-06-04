@@ -12,6 +12,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import tr.edu.ozyegin.cs105.registration.business.RegistrationService;
 import tr.edu.ozyegin.cs105.registration.data.Course;
 import tr.edu.ozyegin.cs105.registration.data.Student;
@@ -21,8 +22,12 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Shows a single student's weekly course schedule as a timetable grid:
@@ -48,16 +53,14 @@ public class ScheduleViewController {
     private static final LocalTime DEFAULT_START = LocalTime.of(9, 0);
     private static final LocalTime DEFAULT_END = LocalTime.of(17, 0);
 
-    /** A small palette so adjacent course blocks are easy to tell apart. */
-    private static final String[] BLOCK_COLORS = {
-            "#4F86C6", "#5FA052", "#C65F5F", "#B07CC6", "#C69A4F", "#4FB0A8"
-    };
-
     @FXML private ComboBox<Student> studentComboBox;
     @FXML private Label headerLabel;
     @FXML private GridPane scheduleGrid;
 
     private RegistrationService service;
+
+    /** A distinct colour per course id, derived from the full catalogue. */
+    private final Map<Integer, String> courseColors = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -67,9 +70,30 @@ public class ScheduleViewController {
 
     public void setService(RegistrationService service) {
         this.service = service;
+        assignCourseColors(service.allCourses());
         studentComboBox.setItems(service.allStudents());
         if (!studentComboBox.getItems().isEmpty()) {
             studentComboBox.getSelectionModel().selectFirst();
+        }
+    }
+
+    /**
+     * Gives every course a distinct colour by spreading hues evenly around the
+     * colour wheel, ordered by course id so the assignment is stable.
+     */
+    private void assignCourseColors(List<Course> courses) {
+        courseColors.clear();
+        List<Course> ordered = new ArrayList<>(courses);
+        ordered.sort(Comparator.comparingInt(Course::getCourseId));
+        int n = ordered.size();
+        for (int i = 0; i < n; i++) {
+            double hue = 360.0 * i / Math.max(1, n);
+            Color c = Color.hsb(hue, 0.65, 0.62);
+            String hex = String.format("#%02X%02X%02X",
+                    (int) Math.round(c.getRed() * 255),
+                    (int) Math.round(c.getGreen() * 255),
+                    (int) Math.round(c.getBlue() * 255));
+            courseColors.put(ordered.get(i).getCourseId(), hex);
         }
     }
 
@@ -145,6 +169,28 @@ public class ScheduleViewController {
         }
         // Close the bottom edge of the last slot.
         addTimeLine(slotCount, VPos.BOTTOM);
+
+        // Vertical separators between the day columns, in the same thin/translucent
+        // style as the time lines. A line on the left edge of each day column, plus
+        // one on the right edge of the last column to close the grid.
+        for (int c = 1; c <= DAYS.length; c++) {
+            addDayLine(c, HPos.LEFT, slotCount);
+        }
+        addDayLine(DAYS.length, HPos.RIGHT, slotCount);
+    }
+
+    /** Adds a 1px translucent vertical line spanning all rows at {@code column}. */
+    private void addDayLine(int column, HPos hAlign, int slotCount) {
+        Region line = new Region();
+        line.setMinWidth(1);
+        line.setPrefWidth(1);
+        line.setMaxWidth(1);
+        line.setMaxHeight(Double.MAX_VALUE);
+        line.setStyle("-fx-background-color: rgba(0, 0, 0, 0.12);");
+        GridPane.setRowSpan(line, slotCount + 1);
+        GridPane.setHalignment(line, hAlign);
+        GridPane.setFillHeight(line, true);
+        scheduleGrid.add(line, column, 0);
     }
 
     /** Adds a 1px translucent horizontal line spanning all columns of {@code row}. */
@@ -191,7 +237,7 @@ public class ScheduleViewController {
             block.setAlignment(Pos.CENTER);
             block.setMaxWidth(Double.MAX_VALUE);
             block.setMaxHeight(Double.MAX_VALUE);
-            String color = BLOCK_COLORS[Math.abs(course.getCourseId()) % BLOCK_COLORS.length];
+            String color = courseColors.getOrDefault(course.getCourseId(), "#4F86C6");
             block.setStyle("-fx-background-color: " + color + ";"
                     + " -fx-padding: 4; -fx-background-radius: 4;"
                     + " -fx-border-color: rgba(0, 0, 0, 0.45);"
